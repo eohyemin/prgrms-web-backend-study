@@ -32,4 +32,12 @@ public class UserAssembler {
                 .build();
     }
 
+    public static User toEntity(UserResponseDto userResponseDto) {
+        return new User.Builder(userResponseDto.getEmail(), userResponseDto.getPasswd())
+                .seq(userResponseDto.getSeq())
+                .loginCount(userResponseDto.getLoginCount())
+                .lastLoginDate(userResponseDto.getLastLoginDate())
+                .createAt(userResponseDto.getCreateAt())
+                .build();
+    }
 }
