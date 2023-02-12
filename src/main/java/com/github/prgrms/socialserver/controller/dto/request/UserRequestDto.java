@@ -1,8 +1,6 @@
 package com.github.prgrms.socialserver.controller.dto.request;
 
-import com.github.prgrms.socialserver.domain.model.User;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 
@@ -54,15 +52,6 @@ public class UserRequestDto {
 
     public LocalDateTime getCreateAt() {
         return createAt;
-    }
-
-    public User toEntity() {
-        return new User.Builder(this.email, this.passwd)
-                .seq(this.seq)
-                .loginCount(this.loginCount)
-                .lastLoginDate(this.lastLoginDate)
-                .createAt(this.createAt)
-                .build();
     }
 
 }

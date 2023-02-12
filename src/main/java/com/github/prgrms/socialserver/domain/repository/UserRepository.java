@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -36,7 +37,6 @@ public class UserRepository {
         parameters.put("create_at", LocalDateTime.now());
 
         Number key = jdbcInsert.executeAndReturnKey(new MapSqlParameterSource(parameters));
-
         user.setSeq(key.longValue());
 
         return user.getSeq();
@@ -49,6 +49,15 @@ public class UserRepository {
     public Optional<User> findById(Long id) {
         User user = jdbcTemplate.queryForObject("SELECT * FROM USERS WHERE SEQ = ?", userRowMapper(), id);
         return Optional.ofNullable(user);
+    }
+
+    public Optional<User> findByEmail(String email) {
+        try {
+            User user = jdbcTemplate.queryForObject("SELECT * FROM USERS WHERE EMAIL = ?", userRowMapper(), email);
+            return Optional.ofNullable(user);
+        } catch(EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
     }
 
     public boolean existByEmail(String email) {
@@ -64,10 +73,11 @@ public class UserRepository {
         return new RowMapper<User>() {
             @Override
             public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+                Timestamp lastLoginDate = rs.getTimestamp("last_login_date");
                 return new User.Builder(rs.getString("email"), rs.getString("passwd"))
                         .seq(rs.getLong("seq"))
                         .loginCount(rs.getInt("login_count"))
-                        .lastLoginDate(rs.getTimestamp("last_login_date").toLocalDateTime())
+                        .lastLoginDate(lastLoginDate == null ? null : lastLoginDate.toLocalDateTime())
                         .createAt(rs.getTimestamp("create_at").toLocalDateTime())
                         .build();
             }
