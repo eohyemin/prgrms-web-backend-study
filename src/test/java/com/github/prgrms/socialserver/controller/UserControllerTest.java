@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -18,7 +19,7 @@ import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
+@WebAppConfiguration
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 class UserControllerTest {
@@ -38,8 +39,10 @@ class UserControllerTest {
         given(userService.join(any()))
                 .willReturn(new UserJoinResponseDto(true, "가입완료"));
 
+        UserJoinRequestDto userJoinRequestDto = new UserJoinRequestDto("email@gmail.com", "123456");
+        String jsonData = objectMapper.writeValueAsString(userJoinRequestDto);
+
         // when & then
-        String jsonData = "{\n\"principal\":\"eohyemin@gmail.com\",\n\"credentials\":\"123456\"\n}";
         mockMvc.perform(post("/api/users/join")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonData))
@@ -52,8 +55,8 @@ class UserControllerTest {
     void createFailTestByDuplicateEmail() throws Exception {
 
         // given
-        userService.join(new UserJoinRequestDto("eohyemin@gmail.com", "123456"));
-        UserJoinRequestDto userJoinRequestDto = new UserJoinRequestDto("eohyemin@gmail.com", "123456");
+        userService.join(new UserJoinRequestDto("email@gmail.com", "123456"));
+        UserJoinRequestDto userJoinRequestDto = new UserJoinRequestDto("email@gmail.com", "123456");
         given(userService.join(any()))
                 .willReturn(new UserJoinResponseDto(false, "이미 존재하는 이메일입니다."));
 

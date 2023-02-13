@@ -1,5 +1,7 @@
 package com.github.prgrms.socialserver.service;
 
+import com.github.prgrms.socialserver.controller.dto.request.UserJoinRequestDto;
+import com.github.prgrms.socialserver.controller.dto.response.UserJoinResponseDto;
 import com.github.prgrms.socialserver.controller.dto.response.UserResponseDto;
 import com.github.prgrms.socialserver.domain.model.User;
 import com.github.prgrms.socialserver.domain.repository.UserRepository;
@@ -34,6 +36,28 @@ class UserServiceTest {
 
     @Mock
     private UserRepository userRepository;
+
+    @Test
+    @DisplayName("회원가입 성공 테스트")
+    public void userJoin() {
+        // given
+        UserJoinRequestDto userJoinRequestDto = new UserJoinRequestDto("email@gmail.com", "password");
+        User user = new User.Builder("email@gmail.com", "password")
+                .seq(1L)
+                .lastLoginDate(LocalDateTime.now())
+                .createAt(LocalDateTime.now())
+                .loginCount(0)
+                .build();
+
+        given(userRepository.existByEmail("email@gmail.com")).willReturn(false);
+        given(userRepository.save(user)).willReturn(1L);
+
+        // when
+        UserJoinResponseDto userJoinResponseDto = userService.join(userJoinRequestDto);
+
+        // then
+        assertThat(userJoinResponseDto.isSuccess()).isTrue();
+    }
 
     @Test
     @DisplayName("존재하는 사용자를 이메일로 검색하는 테스트")
