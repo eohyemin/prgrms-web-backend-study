@@ -5,6 +5,7 @@ import com.github.prgrms.socialserver.controller.dto.response.UserJoinResponseDt
 import com.github.prgrms.socialserver.controller.dto.response.UserResponseDto;
 import com.github.prgrms.socialserver.domain.model.User;
 import com.github.prgrms.socialserver.domain.repository.UserRepository;
+import com.github.prgrms.socialserver.service.exception.EmailDuplicateException;
 import com.github.prgrms.socialserver.service.exception.UserNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +26,7 @@ public class UserService {
 
     public UserJoinResponseDto join(UserJoinRequestDto userJoinRequestDto) {
         if(isEnrollEmail(userJoinRequestDto)) {
-            return new UserJoinResponseDto(false, "이미 존재하는 이메일입니다.");
+            throw new EmailDuplicateException(userJoinRequestDto.getPrincipal());
         }
         User newUser = UserAssembler.toEntity(userJoinRequestDto);
         userRepository.save(newUser);

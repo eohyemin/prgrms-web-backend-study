@@ -50,22 +50,4 @@ class UserControllerTest {
 
     }
 
-    @Test
-    @DisplayName("중복 이메일인 경우 회원가입 실패")
-    void createFailTestByDuplicateEmail() throws Exception {
-
-        // given
-        userService.join(new UserJoinRequestDto("email@gmail.com", "123456"));
-        UserJoinRequestDto userJoinRequestDto = new UserJoinRequestDto("email@gmail.com", "123456");
-        given(userService.join(any()))
-                .willReturn(new UserJoinResponseDto(false, "이미 존재하는 이메일입니다."));
-
-        // when & then
-        String jsonData = objectMapper.writeValueAsString(userJoinRequestDto);
-        mockMvc.perform(post("/api/users/join")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(jsonData))
-                .andExpect(status().isBadRequest());
-
-    }
 }

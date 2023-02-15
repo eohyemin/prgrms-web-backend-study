@@ -23,11 +23,7 @@ public class UserController {
     @PostMapping("/api/users/join")
     public ResponseEntity<UserJoinResponseDto> create(@RequestBody @Valid UserJoinRequestDto userJoinRequestDto) {
         UserJoinResponseDto userJoinResponseDto = userService.join(userJoinRequestDto);
-        if(userJoinResponseDto.isSuccess()){
-            return new ResponseEntity<>(userJoinResponseDto, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(userJoinResponseDto, HttpStatus.BAD_REQUEST);
-        }
+        return new ResponseEntity<>(userJoinResponseDto, HttpStatus.OK);
     }
 
     @GetMapping("/api/users")

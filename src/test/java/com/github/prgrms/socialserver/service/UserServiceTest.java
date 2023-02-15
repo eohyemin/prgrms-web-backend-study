@@ -5,6 +5,7 @@ import com.github.prgrms.socialserver.controller.dto.response.UserJoinResponseDt
 import com.github.prgrms.socialserver.controller.dto.response.UserResponseDto;
 import com.github.prgrms.socialserver.domain.model.User;
 import com.github.prgrms.socialserver.domain.repository.UserRepository;
+import com.github.prgrms.socialserver.service.exception.EmailDuplicateException;
 import com.github.prgrms.socialserver.service.exception.UserNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -57,6 +58,18 @@ class UserServiceTest {
 
         // then
         assertThat(userJoinResponseDto.isSuccess()).isTrue();
+    }
+
+    @Test
+    @DisplayName("중복 이메일인 경우 회원가입 실패")
+    public void userJoinFailByDuplicateEmail() {
+        // given
+        UserJoinRequestDto userJoinRequestDto = new UserJoinRequestDto("email@gmail.com", "password");
+        given(userRepository.existByEmail("email@gmail.com")).willReturn(true);
+
+        // when
+        assertThrows(EmailDuplicateException.class, () -> userService.join(userJoinRequestDto));
+
     }
 
     @Test
