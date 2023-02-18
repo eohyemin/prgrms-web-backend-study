@@ -25,3 +25,6 @@
 
 ### 리뷰
 [1주차](https://github.com/eohyemin/prgrms-web-backend-study/tree/main/review/1주차.md)
+
+### 고민했던점 & 정리한내용
+[Spring Security의 인증처리 절차](https://velog.io/@eohyemin/Spring-Security%EC%9D%98-%EC%9D%B8%EC%A6%9D-%EC%B2%98%EB%A6%AC%EA%B3%BC%EC%A0%95)
