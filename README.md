@@ -5,7 +5,7 @@
 - 1주차 미션
     - Spring, Spring Boot 주요 개념
     - Maven 프로젝트 세팅
-    - 미션
+    - [미션](https://github.com/eohyemin/prgrms-web-backend-study/tree/main/missions/1주차미션.md)
 - 2주차 미션
     - Spring Security를 활용한 인증(Authentication)
     - Session과 JWT기반 사용자 인증
