@@ -10,8 +10,10 @@
     - Spring Security를 활용한 인증(Authentication)
     - Session과 JWT기반 사용자 인증
     - Stateless 아키텍처와 JWT
+    - [미션](https://github.com/eohyemin/prgrms-web-backend-study/tree/main/missions/2주차미션.md)
 - 3주차 미션
     - API 문서 자동화를 위한 Swagger
+    - [미션](https://github.com/eohyemin/prgrms-web-backend-study/tree/main/missions/3주차미션.md)
 - 4주차 미션
     - 예외처리 가이드
     - AWS S3연동
