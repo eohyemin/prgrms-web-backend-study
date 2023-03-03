@@ -30,3 +30,5 @@
 
 ### 고민했던점 & 정리한내용
 [Spring Security의 인증처리 절차](https://velog.io/@eohyemin/Spring-Security%EC%9D%98-%EC%9D%B8%EC%A6%9D-%EC%B2%98%EB%A6%AC%EA%B3%BC%EC%A0%95)
+
+[Spring ControllerAdvice와 ExceptionHandler를 사용한 예외처리](https://velog.io/@eohyemin/Spring-ExceptionHandler%EC%99%80-ControllerAdvice%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%9C-%EC%98%88%EC%99%B8%EC%B2%98%EB%A6%AC-%EB%B0%A9%EB%B2%95)
